@@ -1,6 +1,7 @@
+
 {
-    "coin": "monero",
-    "symbol": "XMR",
+    "coin": "dero",
+    "symbol": "DERO",
 
     "logging": {
         "files": {
@@ -17,7 +18,7 @@
     "poolServer": {
         "enabled": true,
         "clusterForks": "auto",
-        "poolAddress": "48Y4SoUJM5L3YXBEfNQ8bFNsvTNsqcH5Rgq8RF7BwpgvTBj2xr7CmWVanaw7L4U9MnZ4AG7U6Pn1pBhfQhFyFZ1rL1efL8z",
+        "poolAddress": "dERooDspxfSQZ8JoKiVzBwP1veSMpYQArWw9yJiDzbpJNGays2TBr1ZEGmyNs6RP7MKKP2FdTm3VtYfxhY6fZzFH2XWgNfrCSx",
         "blockRefreshInterval": 1000,
         "minerTimeout": 900,
         "ports": [
@@ -75,8 +76,8 @@
     "payments": {
         "enabled": true,
         "interval": 600,
-        "maxAddresses": 50,
-        "mixin": 3,
+        "maxAddresses": 1,
+        "mixin": 5,
         "transferFee": 5000000000,
         "minPayment": 100000000000,
         "denomination": 100000000000
@@ -86,7 +87,7 @@
         "enabled": true,
         "interval": 30,
         "depth": 60,
-        "poolFee": 2,
+        "poolFee": 0.4,
         "devDonation": 0.1,
         "coreDevDonation": 0.1
     },
@@ -103,12 +104,12 @@
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 18081
+        "port": 18091
     },
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 8082
+        "port": 18082
     },
 
     "redis": {
