@@ -4,7 +4,9 @@ node-cryptonote-pool
 High performance Node.js (with native C addons) mining pool for CryptoNote based coins such as Bytecoin, Monero, QuazarCoin, HoneyPenny, etc..
 Comes with lightweight example front-end script which uses the pool's AJAX API.
 
+reference this usage readme on ubuntu server:
 
+https://github.com/SadBatman/cryptonote-sumokoin-pool/blob/master/USAGE.md
 
 #### Table of Contents
 * [Features](#features)
