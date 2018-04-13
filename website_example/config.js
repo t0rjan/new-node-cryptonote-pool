@@ -1,8 +1,8 @@
-var api = "http://192.168.1.142:8888";
+var api = "http://fuck.com/api";
 
 var coinUnits = 1000000000000;
 
-var poolHost = "192.168.1.142";
+var poolHost = "fuck.com";
 
 var irc = "irc.freenode.net/#monero-pools";
 

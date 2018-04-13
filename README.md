@@ -8,6 +8,182 @@ Comes with lightweight example front-end script which uses the pool's AJAX API.
 * [USAGE](https://github.com/SadBatman/cryptonote-sumokoin-pool/blob/master/USAGE.md)
 
 
+#### System Requirements (Ubuntu 16.04.3 or Ubuntu 16.04.4)
+
+```
+root@localhost:~# lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 16.04.3 LTS
+Release:	16.04
+Codename:	xenial
+```
+
+#### Software source content (mainly use 163, as long as the configuration is correct, the source in other regions will follow you)
+
+
+```
+ps：When you copied my content, please execute ：sudo apt-get update
+
+root@localhost:~# cat /etc/apt/sources.list
+# deb cdrom:[Ubuntu 16.04.3 LTS _Xenial Xerus_ - Release amd64 (20170801)]/ xenial main restricted
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://mirrors.163.com/ubuntu/ xenial main restricted
+# deb-src http://mirrors.163.com/ubuntu/ xenial main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted
+# deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://mirrors.163.com/ubuntu/ xenial universe
+# deb-src http://mirrors.163.com/ubuntu/ xenial universe
+deb http://mirrors.163.com/ubuntu/ xenial-updates universe
+# deb-src http://mirrors.163.com/ubuntu/ xenial-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://mirrors.163.com/ubuntu/ xenial multiverse
+# deb-src http://mirrors.163.com/ubuntu/ xenial multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-updates multiverse
+# deb-src http://mirrors.163.com/ubuntu/ xenial-updates multiverse
+
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+# deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu xenial partner
+# deb-src http://archive.canonical.com/ubuntu xenial partner
+
+deb http://security.ubuntu.com/ubuntu xenial-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu xenial-security main restricted
+deb http://security.ubuntu.com/ubuntu xenial-security universe
+# deb-src http://security.ubuntu.com/ubuntu xenial-security universe
+deb http://security.ubuntu.com/ubuntu xenial-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu xenial-security multiverse
+```
+
+
+#### Install prerequisite software
+*  Most used software
+```
+root@localhost:~#  sudo apt-get install git redis-server libboost1.58-all-dev nodejs-dev nodejs-legacy npm cmake libssl-dev supervisor nginx openssl 
+```
+
+*  Nodejs version selection (select node 0.10 version)
+  * [nvm](https://github.com/creationix/nvm)
+```
+root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+```
+
+  * Write the following code to /etc/profile
+
+		```
+		export NVM_DIR="$HOME/.nvm"
+		[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+		```
+  
+  * Apply path file change
+		
+		```
+		# source /etc/profile
+		# command -v nvm
+		
+		```
+
+  * Install nodejs 0.10
+
+		```
+		# nvm install 0.10 
+		# nvm use 0.10
+		```
+
+* run coind wallet explorer as deamon service
+  * unpack file
+
+		```
+		 # cd /root
+		 # git clone https://github.com/t0rjan/new-node-cryptonote-pool.git 
+		 # tar zxvf /root/new-node-cryptonote-pool/Files/dero_linux_amd64.tar.gz -C /root/new-node-cryptonote-pool/Files/
+		 # cd /root/new-node-cryptonote-pool/Files/dero_linux_amd64
+		 
+		 ps: Execute this command to generate the wallet according to the prompt, or open the existing wallet. After success, a wallet.db file will be generated in the current directory.
+		 
+		 # ./dero-wallet-cli-linux-amd64
+		 # cat /root/new-node-cryptonote-pool/Files/dero_linux_amd64/supervisord.conf > /etc/supervisor/supervisord.conf
+		 
+		 ps :It doesn't matter if something goes wrong, it's because we haven't turned on the node server and nginx.
+		 
+		```
+
+* config node server
+  * exec command
+
+		```
+		 # cd /root/new-node-cryptonote-pool
+		 # npm update
+		 # cp config_example.json config.json
+		 
+		 ps: 将 poolAddress 修改为你钱包的地址
+		 # vim config.json 
+		 
+		```
+
+* config nginx
+  * exec command
+		
+		```
+		 # mkdir /opt/www
+		 # cp /root/new-node-cryptonote-pool/website_example /opt/www
+		 # nginx -v
+		   nginx version: nginx/1.10.3 (Ubuntu) 
+		 
+		 ps: install https certificate
+		 # apt-get update
+		 # apt-get install software-properties-common
+		 # add-apt-repository ppa:certbot/certbot
+		 # apt-get update
+		 # apt-get install python-certbot-nginx 
+		 # certbot --nginx
+		 # certbot renew --dry-run
+		 # cp /root/new-node-cryptonote-pool/nginx-ssl-example.com /etc/nginx/sites-available/pool
+		
+		 ps: alter ssl_certificate and ssl_certificate_key and server_name in pool file.
+		 
+		 # vim /etc/nginx/sites-available/pool
+		 # ln -s /etc/nginx/sites-available/pool /etc/nginx/sites-enabled/
+		 # rm /etc/nginx/sites-enabled/default
+		 
+		 ps: if /etc/nginx/snippets does not exist, please create file directory.
+		 # mkdir /etc/nginx/snippets
+		 
+		 ps:If you need to change the nginx refresh dns, modify the contents of the resolver, the default is 8.8.8.8 8.8.4.4
+		
+		 # cp /root/new-node-cryptonote-pool/nginx_conf/snippets/ssl-params.conf /etc/nginx/snippets
+		 
+		 ps: nginx 测试配置文件是否正确
+		 # nginx -t
+		 
+		```
+  
+
+
 #### Table of Contents
 * [Features](#features)
 * [Community Support](#community--support)
