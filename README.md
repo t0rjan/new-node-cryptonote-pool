@@ -5,7 +5,7 @@ High performance Node.js (with native C addons) mining pool for CryptoNote based
 Comes with lightweight example front-end script which uses the pool's AJAX API.
 
 #### Table of Contents
-* [Quick installation](#System Requirements (Ubuntu 16.04.3 or Ubuntu 16.04.4))
+* [Quick installation](#System-Requirements-(Ubuntu-16.04.3-or-Ubuntu-16.04.4))
 * [Features](#features)
 * [Community Support](#community--support)
 * [Pools Using This Software](#pools-using-this-software)
@@ -26,7 +26,7 @@ Comes with lightweight example front-end script which uses the pool's AJAX API.
 * [License](#license)
 
 
-#### System Requirements (Ubuntu 16.04.3 or Ubuntu 16.04.4)
+#### System-Requirements-(Ubuntu-16.04.3-or-Ubuntu-16.04.4)
 ##### Other systems, please test by yourself, according to the following method I can configure directly to complete the build.
 
 
