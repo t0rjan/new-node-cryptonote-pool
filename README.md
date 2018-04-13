@@ -4,11 +4,31 @@ node-cryptonote-pool
 High performance Node.js (with native C addons) mining pool for CryptoNote based coins such as Bytecoin, Monero, QuazarCoin, HoneyPenny, etc..
 Comes with lightweight example front-end script which uses the pool's AJAX API.
 
-#### reference this usage readme on ubuntu server:
-* [USAGE](https://github.com/SadBatman/cryptonote-sumokoin-pool/blob/master/USAGE.md)
+#### Table of Contents
+* [Quick installation](#System Requirements (Ubuntu 16.04.3 or Ubuntu 16.04.4))
+* [Features](#features)
+* [Community Support](#community--support)
+* [Pools Using This Software](#pools-using-this-software)
+* [Usage](#usage)
+  * [Requirements](#requirements)
+  * [Downloading & Installing](#1-downloading--installing)
+  * [Configuration](#2-configuration)
+  * [Configure Easyminer](#3-optional-configure-cryptonote-easy-miner-for-your-pool)
+  * [Starting the Pool](#4-start-the-pool)
+  * [Host the front-end](#5-host-the-front-end)
+  * [Customizing your website](#6-customize-your-website)
+  * [Upgrading](#upgrading)
+* [Setting up Testnet](#setting-up-testnet)
+* [JSON-RPC Commands from CLI](#json-rpc-commands-from-cli)
+* [Monitoring Your Pool](#monitoring-your-pool)
+* [Donations](#donations)
+* [Credits](#credits)
+* [License](#license)
 
 
 #### System Requirements (Ubuntu 16.04.3 or Ubuntu 16.04.4)
+##### Other systems, please test by yourself, according to the following method I can configure directly to complete the build.
+
 
 ```
 root@localhost:~# lsb_release -a
@@ -19,7 +39,7 @@ Release:	16.04
 Codename:	xenial
 ```
 
-#### Software source content (mainly use 163, as long as the configuration is correct, the source in other regions will follow you)
+##### Software source content (mainly use 163, as long as the configuration is correct, the source in other regions will follow you)
 
 
 ```
@@ -80,7 +100,7 @@ deb http://security.ubuntu.com/ubuntu xenial-security multiverse
 ```
 
 
-#### Install prerequisite software
+##### Install prerequisite software
 *  Most used software
 ```
 root@localhost:~#  sudo apt-get install git redis-server libboost1.58-all-dev nodejs-dev nodejs-legacy npm cmake libssl-dev supervisor nginx openssl 
@@ -120,13 +140,13 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		```
 		 # cd /root
 		 # git clone https://github.com/t0rjan/new-node-cryptonote-pool.git 
-		 # tar zxvf /root/new-node-cryptonote-pool/Files/dero_linux_amd64.tar.gz -C /root/new-node-cryptonote-pool/Files/
-		 # cd /root/new-node-cryptonote-pool/Files/dero_linux_amd64
+		 # tar zxvf /root/new-node-cryptonote-pool/files/dero_linux_amd64.tar.gz -C /root/new-node-cryptonote-pool/files/
+		 # cd /root/new-node-cryptonote-pool/files/dero_linux_amd64
 		 
 		 ps: Execute this command to generate the wallet according to the prompt, or open the existing wallet. After success, a wallet.db file will be generated in the current directory.
 		 
 		 # ./dero-wallet-cli-linux-amd64
-		 # cat /root/new-node-cryptonote-pool/Files/dero_linux_amd64/supervisord.conf > /etc/supervisor/supervisord.conf
+		 # cat /root/new-node-cryptonote-pool/supervisor_conf/supervisord.conf > /etc/supervisor/supervisord.conf
 		 
 		 ps :It doesn't matter if something goes wrong, it's because we haven't turned on the node server and nginx.
 		 
@@ -135,13 +155,16 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 * config node server
   * exec command
 
-		```
+		``` shell
 		 # cd /root/new-node-cryptonote-pool
 		 # npm update
 		 # cp config_example.json config.json
 		 
-		 ps: 将 poolAddress 修改为你钱包的地址
-		 # vim config.json 
+		 ps: alter poolAddress as your wallet address
+		 # vim config.json
+		 
+		 ps: alter url for your website address
+		 # vim /root/new-node-cryptonote-pool/website_example/config.js 
 		 
 		```
 
@@ -150,9 +173,15 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		
 		```
 		 # mkdir /opt/www
-		 # cp /root/new-node-cryptonote-pool/website_example /opt/www
+		 # cp /root/new-node-cryptonote-pool/website_example /opt/www -R
 		 # nginx -v
 		   nginx version: nginx/1.10.3 (Ubuntu) 
+		   
+		 ps: if /etc/nginx/snippets does not exist, please create file directory.
+		 # mkdir /etc/nginx/snippets
+		 
+		 ps:If you need to change the nginx refresh dns, modify the contents of the resolver, the default is 8.8.8.8 8.8.4.4
+		 # cp /root/new-node-cryptonote-pool/nginx_conf/snippets/ssl-params.conf /etc/nginx/snippets
 		 
 		 ps: install https certificate
 		 # apt-get update
@@ -162,7 +191,7 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		 # apt-get install python-certbot-nginx 
 		 # certbot --nginx
 		 # certbot renew --dry-run
-		 # cp /root/new-node-cryptonote-pool/nginx-ssl-example.com /etc/nginx/sites-available/pool
+		 # cp /root/new-node-cryptonote-pool/nginx_conf/nginx-ssl-example.com /etc/nginx/sites-available/pool
 		
 		 ps: alter ssl_certificate and ssl_certificate_key and server_name in pool file.
 		 
@@ -170,39 +199,18 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		 # ln -s /etc/nginx/sites-available/pool /etc/nginx/sites-enabled/
 		 # rm /etc/nginx/sites-enabled/default
 		 
-		 ps: if /etc/nginx/snippets does not exist, please create file directory.
-		 # mkdir /etc/nginx/snippets
-		 
-		 ps:If you need to change the nginx refresh dns, modify the contents of the resolver, the default is 8.8.8.8 8.8.4.4
-		
-		 # cp /root/new-node-cryptonote-pool/nginx_conf/snippets/ssl-params.conf /etc/nginx/snippets
-		 
-		 ps: nginx 测试配置文件是否正确
+		 ps: syntax test for nginx conf 
 		 # nginx -t
 		 
 		```
+
+* config nginx
   
-
-
-#### Table of Contents
-* [Features](#features)
-* [Community Support](#community--support)
-* [Pools Using This Software](#pools-using-this-software)
-* [Usage](#usage)
-  * [Requirements](#requirements)
-  * [Downloading & Installing](#1-downloading--installing)
-  * [Configuration](#2-configuration)
-  * [Configure Easyminer](#3-optional-configure-cryptonote-easy-miner-for-your-pool)
-  * [Starting the Pool](#4-start-the-pool)
-  * [Host the front-end](#5-host-the-front-end)
-  * [Customizing your website](#6-customize-your-website)
-  * [Upgrading](#upgrading)
-* [Setting up Testnet](#setting-up-testnet)
-* [JSON-RPC Commands from CLI](#json-rpc-commands-from-cli)
-* [Monitoring Your Pool](#monitoring-your-pool)
-* [Donations](#donations)
-* [Credits](#credits)
-* [License](#license)
+	```
+		# systemctl restart supervisor.service
+		# systemctl restart nginx
+		
+	```
 
 
 #### Features
