@@ -130,6 +130,7 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 
   * Install nodejs 0.10
 
+  * if node not found [question](https://stackoverflow.com/questions/26476744/nvm-ls-remote-command-results-in-n-a/26477536#26477536)
 ```
 		# nvm install 0.10 
 		# nvm use 0.10
