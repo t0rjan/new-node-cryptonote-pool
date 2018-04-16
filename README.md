@@ -114,30 +114,31 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 
   * Write the following code to /etc/profile
 
-		```
+```
 		export NVM_DIR="$HOME/.nvm"
 		[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-		```
+		
+```
   
   * Apply path file change
 		
-		```
+```
 		# source /etc/profile
 		# command -v nvm
 		
-		```
+```
 
   * Install nodejs 0.10
 
-		```
+```
 		# nvm install 0.10 
 		# nvm use 0.10
-		```
+```
 
 * run coind wallet explorer as deamon service
   * unpack file
 
-		```
+```
 		 # cd /root
 		 # git clone https://github.com/t0rjan/new-node-cryptonote-pool.git 
 		 # tar zxvf /root/new-node-cryptonote-pool/files/dero_linux_amd64.tar.gz -C /root/new-node-cryptonote-pool/files/
@@ -150,12 +151,12 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		 
 		 ps :It doesn't matter if something goes wrong, it's because we haven't turned on the node server and nginx.
 		 
-		```
+```
 
 * config node server
   * exec command
 
-		``` shell
+``` shell
 		 # cd /root/new-node-cryptonote-pool
 		 # npm update
 		 # cp config_example.json config.json
@@ -166,12 +167,12 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		 ps: alter url for your website address
 		 # vim /root/new-node-cryptonote-pool/website_example/config.js 
 		 
-		```
+```
 
 * config nginx
   * exec command
 		
-		```
+```
 		 # mkdir /opt/www
 		 # cp /root/new-node-cryptonote-pool/website_example /opt/www -R
 		 # nginx -v
@@ -202,15 +203,15 @@ root@localhost:~# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 		 ps: syntax test for nginx conf 
 		 # nginx -t
 		 
-		```
+```
 
 * config nginx
   
-	```
+```
 		# systemctl restart supervisor.service
 		# systemctl restart nginx
 		
-	```
+```
 
 
 #### Features
