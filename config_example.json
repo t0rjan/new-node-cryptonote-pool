@@ -38,7 +38,7 @@
                 "desc": "High end hardware"
             },
             {
-                "port": 8888,
+                "port": 8881,
                 "difficulty": 10000,
                 "desc": "Hidden port",
                 "hidden": true

@@ -35,7 +35,7 @@ server {
 		proxy_set_header X-NginX-Proxy true;
 		proxy_read_timeout 5m;
 		proxy_connect_timeout 5m;
-		proxy_pass http://127.0.0.1:8888;
+		proxy_pass http://127.0.0.1:8881;
 		proxy_redirect off;
 	}
 }
